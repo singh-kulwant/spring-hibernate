@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class UserOperations implements ErrorController {
+	
+	public UserOperations() {
+		// TODO Auto-generated constructor stub
+	}
 
 	private static final String ERROR_PATH = "/error";
 
@@ -32,6 +36,16 @@ public class UserOperations implements ErrorController {
 		session.getTransaction().commit();
 		session.close();
 		return newUser;
+	}
+	
+	@RequestMapping(value="/updateUser", method=RequestMethod.PUT)
+	public User updateUser(@RequestBody User user) {
+		Session session = createSession();
+		
+		session.update("User", user);
+		session.getTransaction().commit();
+		session.close();
+		return user;
 	}
 
 	@RequestMapping(value = "/dropUser", method = RequestMethod.DELETE)
