@@ -2,6 +2,7 @@ package com.rda;
 
 import java.util.UUID;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -9,8 +10,12 @@ import javax.persistence.Id;
 public class User {
 
 	@Id
+	@Column(columnDefinition = "BINARY(16)")
 	private UUID userId;
-	private String userName;
+	private String firstName;
+	private String lastName;
+	private String country;
+	
 	
 	public UUID getUserId() {
 		return userId;
@@ -20,12 +25,5 @@ public class User {
 		this.userId = userId;
 	}
 
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-	
+		
 }
