@@ -3,4 +3,4 @@ pluginManagement {
 		gradlePluginPortal()
 	}
 }
-rootProject.name = 'rest-database-adapter'
+rootProject.name = 'hibernate-application'
