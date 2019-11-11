@@ -1,5 +1,7 @@
 package com.in.service;
 
+import java.util.UUID;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -35,6 +37,10 @@ public class DataService {
 
 		return newUser;
 
+	}
+	
+	public User findUser(UUID userId) {
+		return sessionObject.get(User.class, userId);
 	}
 
 }

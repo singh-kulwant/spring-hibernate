@@ -1,8 +1,12 @@
 package com.in.rest;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,7 +27,7 @@ public class RDAController {
 
 	@PostMapping(value = "/user")
 	@ResponseBody
-	public ResponseEntity createUser(@RequestBody User user) {
+	public ResponseEntity<?> createUser(@RequestBody User user) {
 
 		try {
 			if (validationService.validUser(user)) {
@@ -38,10 +42,14 @@ public class RDAController {
 
 	}
 
+	@GetMapping(value = "/user/{userId}")
+	public ResponseEntity<User> displayUser(@PathVariable UUID userId) {
+		return ResponseEntity.ok(dataService.findUser(userId));
+
+	}
+	
+
 	/*
-	 * @GetMapping(value = "/user/{userId}") public User displayUser(@PathVariable
-	 * UUID userId) { return sessionObject.createQuery("SELECT a FROM User a",
-	 * User.class).getResultList(); }
 	 * 
 	 * @GetMapping(value = "/users") public List<User> displayUsers() { return
 	 * sessionObject.createQuery("SELECT a FROM User a",

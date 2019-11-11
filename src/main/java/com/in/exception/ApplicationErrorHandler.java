@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 
 public class ApplicationErrorHandler {
 
-	public static ResponseEntity handleServiceExceptions(final Throwable throwable) {
+	public static ResponseEntity<?> handleServiceExceptions(final Throwable throwable) {
 
 		return new ResponseEntity<>(ExceptionUtils.getRootCause(throwable).getMessage(),
 				HttpStatus.INTERNAL_SERVER_ERROR);
