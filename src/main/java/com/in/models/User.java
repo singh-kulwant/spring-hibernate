@@ -5,7 +5,6 @@ import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -19,7 +18,7 @@ public class User {
 	private UUID userId;
 	private String firstName;
 	private String lastName;
-	private String country;
+	private Address address;
 
 	/**
 	 * @return the userId
@@ -40,13 +39,6 @@ public class User {
 	 */
 	public String getLastName() {
 		return lastName;
-	}
-
-	/**
-	 * @return the country
-	 */
-	public String getCountry() {
-		return country;
 	}
 
 	/**
@@ -71,10 +63,17 @@ public class User {
 	}
 
 	/**
-	 * @param country the country to set
+	 * @return the address
 	 */
-	public void setCountry(String country) {
-		this.country = country;
+	public Address getAddress() {
+		return address;
+	}
+
+	/**
+	 * @param address the address to set
+	 */
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
 }

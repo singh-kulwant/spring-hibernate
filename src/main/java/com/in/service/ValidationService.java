@@ -14,7 +14,7 @@ public class ValidationService {
 			return false;
 
 		if (ObjectUtils.isNotEmpty(user.getFirstName()) || ObjectUtils.isNotEmpty(user.getLastName())
-				|| ObjectUtils.isNotEmpty(user.getCountry())) {
+				|| ObjectUtils.isNotEmpty(user.getAddress())) {
 			return true;
 		} else {
 			return false;
