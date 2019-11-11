@@ -1,78 +1,67 @@
 package com.in.rest;
 
-import java.util.List;
-import java.util.UUID;
-
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.in.models.User;
+import com.in.service.DataService;
+import com.in.service.ValidationService;
 
 @RestController
 public class RDAController {
 
-	private Session sessionObject;
+	@Autowired
+	DataService dataService;
 
-	public RDAController() {
-
-		/*
-		 * configure() reads the configuration from hibernate.cfg.xml and
-		 * buildSessionFactory creates the session factory object based on configuration
-		 * we provided
-		 */
-		SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-		Session session = sessionFactory.openSession();
-		session.beginTransaction();// new transaction is created, its used to define single unit of work
-		this.sessionObject = session;
-
-	}
+	@Autowired
+	ValidationService validationService;
 
 	@PostMapping(value = "/user")
 	@ResponseBody
-	public User createUsers(@RequestBody User newUser) {
+	public ResponseEntity createUser(@RequestBody User user) {
 
-		if (null != newUser.getUserId()) {
+		try {
+			if (validationService.validUser(user)) {
+				return ResponseEntity.ok(dataService.createUser(user));
+			} else {
+				return new ResponseEntity<>("Invalid request", HttpStatus.BAD_REQUEST);
+			}
 
-		} else {
-			newUser.setUserId(UUID.randomUUID());
-			sessionObject.save(newUser);
+		} catch (Exception e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 
-		sessionObject.getTransaction().commit();
-		return newUser;
 	}
 
-	@PutMapping(value = "/user")
-	@ResponseBody
-	public User updateUser(@RequestBody User user) {
-
-		sessionObject.update("User", user);
-		sessionObject.getTransaction().commit();
-		return user;
-	}
-
-	@DeleteMapping(value = "/user/{userId}")
-	public String dropUser(@PathVariable UUID userId) {
-
-		sessionObject.delete(sessionObject.find(User.class, userId));
-
-		sessionObject.flush();
-
-		return "User " + userId + " deleted!!";
-	}
-
-	@GetMapping(value = "/user")
-	public List<User> displayUsers() {
-		return sessionObject.createQuery("SELECT a FROM User a", User.class).getResultList();
-	}
+	/*
+	 * @GetMapping(value = "/user/{userId}") public User displayUser(@PathVariable
+	 * UUID userId) { return sessionObject.createQuery("SELECT a FROM User a",
+	 * User.class).getResultList(); }
+	 * 
+	 * @GetMapping(value = "/users") public List<User> displayUsers() { return
+	 * sessionObject.createQuery("SELECT a FROM User a",
+	 * User.class).getResultList(); }
+	 * 
+	 * @PutMapping(value = "/user")
+	 * 
+	 * @ResponseBody public User updateUser(@RequestBody User user) {
+	 * 
+	 * sessionObject.update("User", user); sessionObject.getTransaction().commit();
+	 * return user; }
+	 * 
+	 * @DeleteMapping(value = "/user/{userId}") public String dropUser(@PathVariable
+	 * UUID userId) {
+	 * 
+	 * sessionObject.delete(sessionObject.find(User.class, userId));
+	 * 
+	 * sessionObject.flush();
+	 * 
+	 * return "User " + userId + " deleted!!"; }
+	 */
 
 }
