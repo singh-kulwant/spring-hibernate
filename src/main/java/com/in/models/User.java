@@ -1,10 +1,13 @@
 package com.in.models;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -34,6 +37,9 @@ public class User {
 			@AttributeOverride(name = "country", column = @Column(name = "PERM_COUNTRY")),
 			@AttributeOverride(name = "pincode", column = @Column(name = "PERM_PINCODE")) })
 	private Address permanenetAddress;
+
+	@ElementCollection
+	private Set<Feed> feeds = new HashSet<>();
 
 	public UUID getUserId() {
 		return userId;
@@ -73,6 +79,14 @@ public class User {
 
 	public void setPermanenetAddress(Address permanenetAddress) {
 		this.permanenetAddress = permanenetAddress;
+	}
+
+	public Set<Feed> getFeeds() {
+		return feeds;
+	}
+
+	public void setFeeds(Set<Feed> feeds) {
+		this.feeds = feeds;
 	}
 
 }
