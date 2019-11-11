@@ -14,7 +14,8 @@ public class ValidationService {
 			return false;
 
 		if (ObjectUtils.isNotEmpty(user.getFirstName()) || ObjectUtils.isNotEmpty(user.getLastName())
-				|| ObjectUtils.isNotEmpty(user.getAddress())) {
+				|| ObjectUtils.isNotEmpty(user.getCurrentAddress())
+				|| ObjectUtils.isNotEmpty(user.getPermanenetAddress())) {
 			return true;
 		} else {
 			return false;

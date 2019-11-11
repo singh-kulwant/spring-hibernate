@@ -2,6 +2,8 @@ package com.in.models;
 
 import java.util.UUID;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,71 +11,68 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "user")
+@Table(name = "USER_DETAILS")
 public class User {
 
 	@Id
 	@GeneratedValue
-	@Column(columnDefinition = "BINARY(16)")
+	@Column(columnDefinition = "BINARY(16)", name = "USER_ID")
 	private UUID userId;
+	@Column(name = "FIRST_NAME")
 	private String firstName;
+	@Column(name = "LAST_NAME")
 	private String lastName;
-	private Address address;
 
-	/**
-	 * @return the userId
-	 */
+	@AttributeOverrides({ @AttributeOverride(name = "street", column = @Column(name = "RESI_STREET")),
+			@AttributeOverride(name = "city", column = @Column(name = "RESI_CITY")),
+			@AttributeOverride(name = "country", column = @Column(name = "RESI_COUNTRY")),
+			@AttributeOverride(name = "pincode", column = @Column(name = "RESI_PINCODE")) })
+	private Address currentAddress;
+
+	@AttributeOverrides({ @AttributeOverride(name = "street", column = @Column(name = "PERM_STREET")),
+			@AttributeOverride(name = "city", column = @Column(name = "PERM_CITY")),
+			@AttributeOverride(name = "country", column = @Column(name = "PERM_COUNTRY")),
+			@AttributeOverride(name = "pincode", column = @Column(name = "PERM_PINCODE")) })
+	private Address permanenetAddress;
+
 	public UUID getUserId() {
 		return userId;
 	}
 
-	/**
-	 * @return the firstName
-	 */
 	public String getFirstName() {
 		return firstName;
 	}
 
-	/**
-	 * @return the lastName
-	 */
 	public String getLastName() {
 		return lastName;
 	}
 
-	/**
-	 * @param userId the userId to set
-	 */
 	public void setUserId(UUID userId) {
 		this.userId = userId;
 	}
 
-	/**
-	 * @param firstName the firstName to set
-	 */
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
 
-	/**
-	 * @param lastName the lastName to set
-	 */
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
 
-	/**
-	 * @return the address
-	 */
-	public Address getAddress() {
-		return address;
+	public Address getCurrentAddress() {
+		return currentAddress;
 	}
 
-	/**
-	 * @param address the address to set
-	 */
-	public void setAddress(Address address) {
-		this.address = address;
+	public Address getPermanenetAddress() {
+		return permanenetAddress;
+	}
+
+	public void setCurrentAddress(Address currentAddress) {
+		this.currentAddress = currentAddress;
+	}
+
+	public void setPermanenetAddress(Address permanenetAddress) {
+		this.permanenetAddress = permanenetAddress;
 	}
 
 }

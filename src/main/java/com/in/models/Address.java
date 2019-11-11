@@ -1,67 +1,48 @@
 package com.in.models;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
 public class Address {
 
+	@Column(name = "STREET")
 	private String street;
+	@Column(name = "CITY")
 	private String city;
+	@Column(name = "COUNTRY")
 	private String country;
+	@Column(name = "PIN_CODE")
 	private String pincode;
 
-	/**
-	 * @return the street
-	 */
 	public String getStreet() {
 		return street;
 	}
 
-	/**
-	 * @return the city
-	 */
 	public String getCity() {
 		return city;
 	}
 
-	/**
-	 * @return the country
-	 */
 	public String getCountry() {
 		return country;
 	}
 
-	/**
-	 * @return the pincode
-	 */
 	public String getPincode() {
 		return pincode;
 	}
 
-	/**
-	 * @param street the street to set
-	 */
 	public void setStreet(String street) {
 		this.street = street;
 	}
 
-	/**
-	 * @param city the city to set
-	 */
 	public void setCity(String city) {
 		this.city = city;
 	}
 
-	/**
-	 * @param country the country to set
-	 */
 	public void setCountry(String country) {
 		this.country = country;
 	}
 
-	/**
-	 * @param pincode the pincode to set
-	 */
 	public void setPincode(String pincode) {
 		this.pincode = pincode;
 	}
