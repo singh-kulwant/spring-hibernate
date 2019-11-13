@@ -1,5 +1,6 @@
 package com.in.service;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.hibernate.Session;
@@ -38,9 +39,14 @@ public class DataService {
 		return newUser;
 
 	}
-	
+
 	public User findUser(UUID userId) {
 		return sessionObject.get(User.class, userId);
+	}
+
+	public List<User> findAllUsers() {
+		// return sessionObject.getNamedQuery(queryName);
+		return sessionObject.createQuery("SELECT a FROM USER_DETAILS a", User.class).getResultList();
 	}
 
 }

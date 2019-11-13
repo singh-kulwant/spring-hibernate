@@ -1,5 +1,6 @@
 package com.in.rest;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,12 +49,14 @@ public class RDAController {
 
 	}
 	
+	@GetMapping(value = "/users")
+	public ResponseEntity<List<User>> displayUsers() {
+		return ResponseEntity.ok(dataService.findAllUsers());
+	}
 
 	/*
 	 * 
-	 * @GetMapping(value = "/users") public List<User> displayUsers() { return
-	 * sessionObject.createQuery("SELECT a FROM User a",
-	 * User.class).getResultList(); }
+	 * 
 	 * 
 	 * @PutMapping(value = "/user")
 	 * 

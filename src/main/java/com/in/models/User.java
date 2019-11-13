@@ -1,7 +1,7 @@
 package com.in.models;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.UUID;
 
 import javax.persistence.AttributeOverride;
@@ -11,7 +11,13 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.CollectionId;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "USER_DETAILS")
@@ -39,7 +45,10 @@ public class User {
 	private Address permanenetAddress;
 
 	@ElementCollection
-	private Set<Feed> feeds = new HashSet<>();
+	@JoinTable(name = "USER_FEEDS", joinColumns = @JoinColumn(name = "USER_ID"))
+	@GenericGenerator(name="sequence-gen",strategy = "sequence")
+	@CollectionId(columns = {@Column(name="ADDRESS_ID")}, generator="sequence-gen", type=@Type(type = "long"))
+	private Collection<Feed> feeds = new ArrayList<Feed>();
 
 	public UUID getUserId() {
 		return userId;
@@ -81,11 +90,11 @@ public class User {
 		this.permanenetAddress = permanenetAddress;
 	}
 
-	public Set<Feed> getFeeds() {
+	public Collection<Feed> getFeeds() {
 		return feeds;
 	}
 
-	public void setFeeds(Set<Feed> feeds) {
+	public void setFeeds(Collection<Feed> feeds) {
 		this.feeds = feeds;
 	}
 
