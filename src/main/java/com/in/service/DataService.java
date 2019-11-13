@@ -30,11 +30,9 @@ public class DataService {
 	public User findUser(UUID userId) {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		try {
-			return session.get(User.class, userId);
-		} finally {
-			session.close();
-		}
+		User user = (User) session.get(User.class, userId);
+		session.close();
+		return user;
 	}
 
 	/*

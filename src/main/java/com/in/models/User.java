@@ -9,6 +9,7 @@ import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -44,7 +45,7 @@ public class User {
 			@AttributeOverride(name = "pincode", column = @Column(name = "PERM_PINCODE")) })
 	private Address permanenetAddress;
 
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
 	@JoinTable(name = "USER_FEEDS", joinColumns = @JoinColumn(name = "USER_ID"))
 	@GenericGenerator(name="sequence_gen",strategy = "sequence")
 	@CollectionId(columns = {@Column(name="ADDRESS_ID")}, generator="sequence_gen", type=@Type(type = "long"))
