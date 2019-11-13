@@ -49,10 +49,10 @@ public class RDAController {
 
 	}
 	
-	@GetMapping(value = "/users")
-	public ResponseEntity<List<User>> displayUsers() {
-		return ResponseEntity.ok(dataService.findAllUsers());
-	}
+	/*
+	 * @GetMapping(value = "/users") public ResponseEntity<List<User>>
+	 * displayUsers() { return ResponseEntity.ok(dataService.findAllUsers()); }
+	 */
 
 	/*
 	 * 

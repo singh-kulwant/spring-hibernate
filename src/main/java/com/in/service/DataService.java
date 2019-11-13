@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.in.models.User;
@@ -14,39 +15,32 @@ import com.in.models.User;
 @Service
 public class DataService {
 
-	private Session sessionObject;
-
-	public DataService() {
-
-		/*
-		 * configure() reads the configuration from hibernate.cfg.xml and
-		 * buildSessionFactory creates the session factory object based on configuration
-		 * we provided
-		 */
-		SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-		Session session = sessionFactory.openSession();
-		session.beginTransaction();// new transaction is created, its used to define single unit of work
-		this.sessionObject = session;
-
-	}
+	@Autowired
+	private SessionFactory sessionFactory;
 
 	public User createUser(User newUser) {
-		sessionObject.save(newUser);
-		Transaction transaction = sessionObject.getTransaction();
-		if (transaction.isActive())
-			transaction.commit();
-
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		session.save(newUser);
+		session.getTransaction().commit();
+		session.close();
 		return newUser;
-
 	}
 
 	public User findUser(UUID userId) {
-		return sessionObject.get(User.class, userId);
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		try {
+			return session.get(User.class, userId);
+		} finally {
+			session.close();
+		}
 	}
 
-	public List<User> findAllUsers() {
-		// return sessionObject.getNamedQuery(queryName);
-		return sessionObject.createQuery("SELECT a FROM USER_DETAILS a", User.class).getResultList();
-	}
-
+	/*
+	 * public List<User> findAllUsers() { // return
+	 * sessionObject.getNamedQuery(queryName); return
+	 * sessionObject.createQuery("SELECT a FROM USER_DETAILS a",
+	 * User.class).getResultList(); }
+	 */
 }

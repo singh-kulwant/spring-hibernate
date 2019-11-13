@@ -1,7 +1,7 @@
 package com.in.models;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.AttributeOverride;
@@ -46,9 +46,9 @@ public class User {
 
 	@ElementCollection
 	@JoinTable(name = "USER_FEEDS", joinColumns = @JoinColumn(name = "USER_ID"))
-	@GenericGenerator(name="sequence-gen",strategy = "sequence")
-	@CollectionId(columns = {@Column(name="ADDRESS_ID")}, generator="sequence-gen", type=@Type(type = "long"))
-	private Collection<Feed> feeds = new ArrayList<Feed>();
+	@GenericGenerator(name="sequence_gen",strategy = "sequence")
+	@CollectionId(columns = {@Column(name="ADDRESS_ID")}, generator="sequence_gen", type=@Type(type = "long"))
+	private List<Feed> feeds = new ArrayList<Feed>();
 
 	public UUID getUserId() {
 		return userId;
@@ -90,11 +90,11 @@ public class User {
 		this.permanenetAddress = permanenetAddress;
 	}
 
-	public Collection<Feed> getFeeds() {
+	public List<Feed> getFeeds() {
 		return feeds;
 	}
 
-	public void setFeeds(Collection<Feed> feeds) {
+	public void setFeeds(List<Feed> feeds) {
 		this.feeds = feeds;
 	}
 
